@@ -1,0 +1,5 @@
+- name: Install portbase packages
+  package:
+    name:
+      - ant
+    state: latest

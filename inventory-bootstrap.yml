@@ -1,0 +1,34 @@
+all:
+  children:
+    server:
+      hosts:
+        lmserver.mdekort.lan:
+          ansible_user: melvyn
+        pihole.mdekort.lan:
+          ansible_user: pi
+        lmnuc.mdekort.lan:
+          ansible_user: melvyn
+        pizero.mdekort.lan:
+          ansible_user: pi
+    mediacenter:
+      hosts:
+        lmkodi[01:02].mdekort.lan:
+          ansible_user: root
+    workstation:
+      hosts:
+        melvynpc.mdekort.lan:
+          ansible_user: melvyn
+        ka01pwiltp071.mdekort.lan:
+          ansible_user: melvyn
+        lmlaptop01.mdekort.lan:
+          ansible_user: melvyn
+    laptop:
+      hosts:
+        ka01pwiltp071.mdekort.lan:
+          ansible_user: melvyn
+        lmlaptop01.mdekort.lan:
+          ansible_user: melvyn
+    vm:
+      hosts:
+        arch:
+          ansible_user: melvyn

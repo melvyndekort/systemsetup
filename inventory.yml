@@ -1,0 +1,23 @@
+all:
+  children:
+    server:
+      hosts:
+        lmserver.mdekort.lan:
+        pihole.mdekort.lan:
+        lmnuc.mdekort.lan:
+        pizero.mdekort.lan:
+    workstation:
+      hosts:
+        melvynpc.mdekort.lan:
+        ka01pwiltp071.mdekort.lan:
+        lmlaptop01.mdekort.lan:
+    laptop:
+      hosts:
+        ka01pwiltp071.mdekort.lan:
+        lmlaptop01.mdekort.lan:
+    mediacenter:
+      hosts:
+        lmkodi[01:02].mdekort.lan:
+    vm:
+      hosts:
+        arch:

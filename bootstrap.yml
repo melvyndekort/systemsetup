@@ -1,0 +1,50 @@
+---
+
+- hosts: all:!mediacenter
+  become: true
+  tasks:
+
+    - name: install updates (Arch)
+      tags: always
+      pacman:
+        update_cache: yes
+        upgrade: yes
+      when: ansible_facts['distribution'] == "Archlinux"
+
+    - name: install updates (Debian)
+      tags: always
+      apt:
+        upgrade: dist
+        update_cache: yes
+      when: ansible_facts['distribution'] == "Debian"
+
+    - name: create ansible user
+      tags: always
+      user:
+        name: ansible
+        groups: root
+
+    - name: add ssh key for ansible
+      tags: always
+      authorized_key:
+        user: ansible
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqma4p6XFAp+bCBEdviwNEEm+SHd+hKbVmWAiJap2K3 ansible"
+
+    - name: add sudoers file for ansible
+      tags: always
+      copy:
+        src: sudoers_ansible
+        dest: /etc/sudoers.d/ansible
+        owner: root
+        group: root
+        mode: 0440
+
+- hosts: mediacenter
+  become: true
+  tasks:
+
+    - name: add ssh key for root
+      tags: always
+      authorized_key:
+        user: root
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqma4p6XFAp+bCBEdviwNEEm+SHd+hKbVmWAiJap2K3 ansible"

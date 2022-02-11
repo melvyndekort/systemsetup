@@ -1,0 +1,31 @@
+---
+
+- hosts: server:workstation:vm
+  become: true
+  pre_tasks:
+
+    - name: update repo cache (Arch)
+      tags: always
+      pacman:
+        upgrade: yes
+        update_cache: yes
+      changed_when: false
+      when: ansible_facts['distribution'] == "Archlinux"
+
+    - name: update repo cache (Debian)
+      tags: always
+      apt:
+        upgrade: dist
+        update_cache: yes
+      changed_when: false
+      when: ansible_facts['distribution'] == "Debian"
+
+- hosts: server:workstation
+  become: true
+  roles:
+    - base
+
+- hosts: workstation
+  become: true
+  roles:
+    - gui
