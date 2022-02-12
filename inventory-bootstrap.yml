@@ -4,10 +4,12 @@ all:
       hosts:
         lmserver.mdekort.lan:
           ansible_user: melvyn
+          ansible_become_pass: '{{ su_password }}'
         pihole.mdekort.lan:
           ansible_user: pi
         lmnuc.mdekort.lan:
           ansible_user: melvyn
+          ansible_become_pass: '{{ su_password }}'
         pizero.mdekort.lan:
           ansible_user: pi
     mediacenter:
@@ -18,17 +20,23 @@ all:
       hosts:
         melvynpc.mdekort.lan:
           ansible_user: melvyn
+          ansible_become_pass: '{{ su_password }}'
         ka01pwiltp071.mdekort.lan:
           ansible_user: melvyn
+          ansible_become_pass: '{{ su_password }}'
         lmlaptop01.mdekort.lan:
           ansible_user: melvyn
+          ansible_become_pass: '{{ su_password }}'
     laptop:
       hosts:
         ka01pwiltp071.mdekort.lan:
           ansible_user: melvyn
+          ansible_become_pass: '{{ su_password }}'
         lmlaptop01.mdekort.lan:
           ansible_user: melvyn
+          ansible_become_pass: '{{ su_password }}'
     vm:
       hosts:
         arch:
           ansible_user: melvyn
+          ansible_become_pass: '{{ su_password }}'
