@@ -1,9 +1,9 @@
 .DEFAULT_GOAL := site
 
 prechecks:
-ifndef ENV
-  $(warning ENV was not set, defaulting to all)
-  ENV=all
+ifndef TARGET
+  $(warning TARGET was not set, defaulting to all)
+  TARGET=all
 endif
 
 vault:
@@ -20,7 +20,7 @@ loadkey:
 bootstrap: prechecks
 	@ansible-playbook \
 	--inventory inventory-bootstrap.yml \
-	--limit $(ENV) \
+	--limit $(TARGET) \
 	--vault-password-file pass-client.sh \
 	--extra-vars @files/vault.yml \
 	bootstrap.yml
@@ -29,7 +29,7 @@ site: prechecks loadkey bootstrap
 	@ansible-playbook \
 	--inventory inventory.yml \
 	--user ansible \
-	--limit $(ENV) \
+	--limit $(TARGET) \
 	--vault-password-file pass-client.sh \
 	--extra-vars @files/vault.yml \
 	site.yml

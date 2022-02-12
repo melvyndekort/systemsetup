@@ -20,7 +20,7 @@
       changed_when: false
       when: ansible_facts['distribution'] == "Debian"
 
-- hosts: server:workstation
+- hosts: server:workstation:vm
   become: true
   roles:
     - base
