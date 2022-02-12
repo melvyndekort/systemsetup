@@ -1,33 +1,35 @@
 .DEFAULT_GOAL := site
 
 prechecks:
-
 ifndef ENV
   $(warning ENV was not set, defaulting to all)
   ENV=all
 endif
 
-BECOME := $(@pass linux/melvyn)
+vault:
+	@ansible-vault edit \
+	--vault-password-file pass-client.sh \
+	files/vault.yml
+
+loadkey:
+	@ansible-vault view \
+	--vault-password-file pass-client.sh \
+	files/vault_ssh_key | \
+	ssh-add -q -t 600 -
 
 bootstrap: prechecks
 	@ansible-playbook \
 	--inventory inventory-bootstrap.yml \
 	--limit $(ENV) \
 	--vault-password-file pass-client.sh \
-	--extra-vars @vault.yml \
+	--extra-vars @files/vault.yml \
 	bootstrap.yml
 
-site: prechecks bootstrap
+site: prechecks loadkey bootstrap
 	@ansible-playbook \
 	--inventory inventory.yml \
-	--private-key ~/.ssh/ansible \
 	--user ansible \
 	--limit $(ENV) \
 	--vault-password-file pass-client.sh \
-	--extra-vars @vault.yml \
+	--extra-vars @files/vault.yml \
 	site.yml
-
-vault:
-	@ansible-vault edit \
-	--vault-password-file ./pass-client.sh \
-	vault.yml
